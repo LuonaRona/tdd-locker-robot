@@ -2,19 +2,19 @@ import { LockerSize } from './Locker';
 import { genID } from './utils';
 
 export class Ticket {
-  ticketNo: string;
-  lockerSize: LockerSize;
+  private ticketNo: string;
+  private lockerSize: LockerSize;
 
   constructor(lockerSize: LockerSize) {
     this.ticketNo = genID();
     this.lockerSize = lockerSize;
   }
 
-  getLockerSize() {
+  public getLockerSize() {
     return this.lockerSize;
   }
 
-  getTicketNo() {
-    return this.ticketNo;
+  public getTicketNo() {
+    return this.ticketNo.toUpperCase();
   }
 }

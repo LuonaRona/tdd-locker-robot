@@ -1,19 +1,19 @@
 import { LockerSize } from './Locker';
 
 export class Bag {
-  size: LockerSize;
-  content: any;
+  private size: LockerSize;
+  private content: any;
 
   constructor(size: LockerSize, content: any) {
     this.size = size;
     this.content = content;
   }
 
-  getSize() {
+  public getSize() {
     return this.size;
   }
 
-  getContent() {
+  public getContent() {
     return this.content;
   }
 }

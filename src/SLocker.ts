@@ -1,23 +1,33 @@
 import { Bag } from './Bag';
 import { Locker } from './Locker';
 import { Ticket } from './Ticket';
-import { S_LOCKER_TOTAL_CAPACITY, S_LOCKER_SIZE } from './constant/locker';
+import { PROMPT_MESSAGE_LOCKER_IS_FULL, S_LOCKER_CAPACITY, S_LOCKER_SIZE } from './constant/locker';
 
 export class SLocker extends Locker {
-  list: Bag[] = [];
+  private list: Bag[] = [];
 
   constructor() {
-    super(S_LOCKER_TOTAL_CAPACITY, S_LOCKER_SIZE);
+    super(S_LOCKER_CAPACITY, S_LOCKER_SIZE);
   }
 
-  storeBag(bag: Bag) {
-    if (this.list.length < this.totalCapacity) {
-      this.list.push(bag);
+  private getUsedCapacity() {
+    return this.list.length;
+  }
+
+  private storeInLocker(bag: Bag) {
+    this.list.push(bag);
+  }
+
+  public isFull(): boolean {
+    return this.getTotalCapacity() === this.getUsedCapacity();
+  }
+
+  public storeBag(bag: Bag): Ticket | string {
+    if (!this.isFull()) {
+      this.storeInLocker(bag);
       return new Ticket(S_LOCKER_SIZE);
     }
-  }
 
-  getCurrentRemainingCapacity(): number {
-    return this.totalCapacity - this.list.length;
+    return PROMPT_MESSAGE_LOCKER_IS_FULL;
   }
 }

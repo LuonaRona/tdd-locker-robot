@@ -1,8 +1,9 @@
 import { Bag } from './Bag';
+import { PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { SLocker } from './SLocker';
 
 export class LockerRobot {
-  sLockerList: SLocker[] = [];
+  private sLockerList: SLocker[] = [];
 
   constructor(sLockerCount: number) {
     this.genSLocker(sLockerCount);
@@ -14,15 +15,25 @@ export class LockerRobot {
     }
   }
 
-  storeBag(bag: Bag) {
-    const sLockerCount = this.sLockerList.length;
+  private getSLockerCount() {
+    return this.sLockerList.length;
+  }
 
-    for (let i = 0; i < sLockerCount; i += 1) {
+  private storeInSLocker(bag: Bag) {
+    const count = this.getSLockerCount();
+
+    for (let i = 0; i < count; i += 1) {
       const currentLocker = this.sLockerList[i];
 
-      if (currentLocker.getCurrentRemainingCapacity() > 0) {
+      if (!currentLocker.isFull()) {
         return currentLocker.storeBag(bag);
       }
     }
+
+    return PROMPT_MESSAGE_LOCKER_IS_FULL;
+  }
+
+  public storeBag(bag: Bag) {
+    return this.storeInSLocker(bag);
   }
 }
