@@ -19,6 +19,11 @@ export class SLocker extends Locker {
     this.list.push(new StoredBag(ticketNo, bag));
   }
 
+  public bagIsExists(ticketNo: string): boolean {
+    const ticketsNo = this.list.map((bag) => bag.getTicketNo());
+    return ticketsNo.includes(ticketNo);
+  }
+
   public isFull(): boolean {
     return this.getTotalCapacity() === this.getUsedCapacity();
   }
@@ -32,5 +37,18 @@ export class SLocker extends Locker {
     }
 
     return PROMPT_MESSAGE_LOCKER_IS_FULL;
+  }
+
+  public takeBag(ticket: Ticket) {
+    const ticketNo = ticket.getTicketNo();
+    const storedBagList = this.list;
+
+    if (this.bagIsExists(ticketNo)) {
+      const currentStoredBag = storedBagList.find((bag) => {
+        return bag.getTicketNo() === ticketNo;
+      }) as Bag;
+
+      return currentStoredBag;
+    }
   }
 }
