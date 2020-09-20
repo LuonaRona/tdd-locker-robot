@@ -45,12 +45,10 @@ export class LLocker extends Locker {
 
   public takeBag(ticket: Ticket) {
     const ticketNo = ticket.getTicketNo();
+    const [currentStoredBag] = _.remove(this.list, (bag) => {
+      return bag.getTicketNo() === ticketNo;
+    });
 
-    if (this.bagIsExists(ticketNo)) {
-      const [currentStoredBag] = _.remove(this.list, (bag) => {
-        return bag.getTicketNo() === ticketNo;
-      });
-      return currentStoredBag;
-    }
+    return currentStoredBag;
   }
 }

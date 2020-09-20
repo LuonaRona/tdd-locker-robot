@@ -47,14 +47,9 @@ export class MLocker extends Locker {
 
   public takeBag(ticket: Ticket) {
     const ticketNo = ticket.getTicketNo();
-
-    if (this.bagIsExists(ticketNo)) {
-      const [currentStoredBag] = _.remove(this.list, (bag) => {
-        return bag.getTicketNo() === ticketNo;
-      });
-      return currentStoredBag;
-    }
-
-    return PROMPT_MESSAGE_INVALID_TICKET;
+    const [currentStoredBag] = _.remove(this.list, (bag) => {
+      return bag.getTicketNo() === ticketNo;
+    });
+    return currentStoredBag;
   }
 }
