@@ -1,4 +1,5 @@
 import { Bag } from './Bag';
+import { PROMPT_MESSAGE_MISMATCH_TICKET, S_LOCKER_SIZE } from './constant/locker';
 import { SLocker } from './SLocker';
 import { Ticket } from './Ticket';
 
@@ -15,7 +16,11 @@ export class LockerRobotManager {
     return this.sLocker.storeBag(bag);
   }
 
-  public takeBag(ticket: Ticket) {
-    return this.sLocker.takeBag(ticket);
+  public takeSBag(ticket: Ticket) {
+    if (ticket.getLockerSize() === S_LOCKER_SIZE) {
+      return this.sLocker.takeBag(ticket);
+    }
+
+    return PROMPT_MESSAGE_MISMATCH_TICKET;
   }
 }
