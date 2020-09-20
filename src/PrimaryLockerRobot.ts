@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Bag } from './Bag';
-import { PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
+import { PROMPT_MESSAGE_INVALID_TICKET, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { MLocker } from './MLocker';
 import { Ticket } from './Ticket';
 export class PrimaryLockerRobot {
@@ -44,5 +44,7 @@ export class PrimaryLockerRobot {
         return currentLocker.takeBag(ticket);
       }
     }
+
+    return PROMPT_MESSAGE_INVALID_TICKET;
   }
 }

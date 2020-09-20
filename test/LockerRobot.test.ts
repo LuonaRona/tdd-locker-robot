@@ -99,3 +99,12 @@ test('should_get_M_bag_WHEN_take_bag_GIVEN_take_M_bag_valid_ticket', () => {
   expect(bag.getSize()).toEqual(M_LOCKER_SIZE);
   expect(bag.getContent()).toEqual(DEFAULT_CUSTOMER_BAG);
 });
+
+test('should_prompt_failure_WHEN_take_bag_GIVEN_take_M_bag_invalid_ticket', () => {
+  lockerRobot.storeBag(mCustomerBag);
+  const invalidTicket = new Ticket(M_LOCKER_SIZE, 1);
+
+  const promptMessage = lockerRobot.takeMBag(invalidTicket) as string;
+
+  expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
+});
