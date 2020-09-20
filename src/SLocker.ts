@@ -6,6 +6,7 @@ import { StoredBag } from './StoredBag';
 import {
   PROMPT_MESSAGE_INVALID_TICKET,
   PROMPT_MESSAGE_LOCKER_IS_FULL,
+  PROMPT_MESSAGE_MISMATCH_TICKET,
   S_LOCKER_CAPACITY,
   S_LOCKER_SIZE,
 } from './constant/locker';
@@ -46,6 +47,10 @@ export class SLocker extends Locker {
   }
 
   public takeBag(ticket: Ticket) {
+    if (ticket.getLockerSize() !== S_LOCKER_SIZE) {
+      return PROMPT_MESSAGE_MISMATCH_TICKET;
+    }
+
     if (this.bagIsExists(ticket.getTicketNo())) {
       const ticketNo = ticket.getTicketNo();
       const [currentStoredBag] = _.remove(this.list, (bag) => {

@@ -3,7 +3,6 @@ import {
   LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_COUNT,
   LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_NO,
   M_LOCKER_SIZE,
-  PROMPT_MESSAGE_MISMATCH_TICKET,
   S_LOCKER_SIZE,
 } from './constant/locker';
 import { PrimaryLockerRobot } from './PrimaryLockerRobot';
@@ -29,10 +28,10 @@ export class LockerRobotManager {
   }
 
   public takeSBag(ticket: Ticket) {
-    if (ticket.getLockerSize() === S_LOCKER_SIZE) {
-      return this.sLocker.takeBag(ticket);
-    }
+    return this.sLocker.takeBag(ticket);
+  }
 
-    return PROMPT_MESSAGE_MISMATCH_TICKET;
+  public takeMBag(ticket: Ticket) {
+    return this.primaryLockerRobot.takeBag(ticket);
   }
 }
