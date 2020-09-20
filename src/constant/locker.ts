@@ -10,3 +10,5 @@ export const L_LOCKER_COUNT = 5;
 export const PROMPT_MESSAGE_LOCKER_IS_FULL = '储物柜已满！';
 export const PROMPT_MESSAGE_INVALID_TICKET = '无效票据！';
 export const PROMPT_MESSAGE_MISMATCH_TICKET = '票据的型号不匹配！';
+export const LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_NO = 1;
+export const LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_COUNT = 1;

@@ -1,19 +1,22 @@
 import { Bag } from './Bag';
-import { M_LOCKER_SIZE, PROMPT_MESSAGE_MISMATCH_TICKET, S_LOCKER_SIZE } from './constant/locker';
+import {
+  LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_COUNT,
+  LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_NO,
+  M_LOCKER_SIZE,
+  PROMPT_MESSAGE_MISMATCH_TICKET,
+  S_LOCKER_SIZE,
+} from './constant/locker';
 import { PrimaryLockerRobot } from './PrimaryLockerRobot';
 import { SLocker } from './SLocker';
 import { Ticket } from './Ticket';
-
-const DEFAULT_LOCKER_NO = 1;
-const DEFAULT_LOCKER_COUNT = 1;
 
 export class LockerRobotManager {
   private sLocker: SLocker;
   private primaryLockerRobot: PrimaryLockerRobot;
 
   constructor() {
-    this.sLocker = new SLocker(DEFAULT_LOCKER_NO);
-    this.primaryLockerRobot = new PrimaryLockerRobot(DEFAULT_LOCKER_COUNT);
+    this.sLocker = new SLocker(LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_NO);
+    this.primaryLockerRobot = new PrimaryLockerRobot(LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_COUNT);
   }
 
   public storeBag(bag: Bag) {

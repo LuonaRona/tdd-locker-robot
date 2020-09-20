@@ -1,5 +1,7 @@
 import { Bag } from '../src/Bag';
 import {
+  LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_COUNT,
+  M_LOCKER_CAPACITY,
   M_LOCKER_SIZE,
   PROMPT_MESSAGE_INVALID_TICKET,
   PROMPT_MESSAGE_LOCKER_IS_FULL,
@@ -68,4 +70,13 @@ test('should_get_M_ticket_WHEN_LockerRobotManager_store_bag_GIVEN_M_bag_and_have
 
   expect(ticket.getLockerSize()).toEqual(M_LOCKER_SIZE);
   expect(ticket.getTicketNo()).toBeTruthy();
+});
+
+test('should_get_M_ticket_WHEN_LockerRobotManager_store_bag_GIVEN_M_bag_and_have_no_space', () => {
+  for (let i = 0; i < M_LOCKER_CAPACITY * LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_COUNT; i++) {
+    lockerRobotManager.storeBag(mCustomerBag);
+  }
+  const promptMessage = lockerRobotManager.storeBag(mCustomerBag) as Ticket;
+
+  expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
 });
