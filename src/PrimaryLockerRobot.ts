@@ -10,7 +10,7 @@ export class PrimaryLockerRobot {
 
   private genMLocker(count: number) {
     for (let i = 0; i < count; i += 1) {
-      this.mLockerList.push(new MLocker());
+      this.mLockerList.push(new MLocker(i + 1));
     }
   }
 

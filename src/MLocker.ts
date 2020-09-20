@@ -7,8 +7,8 @@ import { M_LOCKER_CAPACITY, M_LOCKER_SIZE } from './constant/locker';
 export class MLocker extends Locker {
   private list: StoredBag[] = [];
 
-  constructor() {
-    super(M_LOCKER_CAPACITY, M_LOCKER_SIZE);
+  constructor(lockerNo: number) {
+    super(lockerNo, M_LOCKER_CAPACITY, M_LOCKER_SIZE);
   }
 
   private getUsedCapacity() {
@@ -30,7 +30,7 @@ export class MLocker extends Locker {
 
   public storeBag(bag: Bag) {
     if (!this.isFull()) {
-      const ticket = new Ticket(M_LOCKER_SIZE);
+      const ticket = new Ticket(M_LOCKER_SIZE, this.getLockerNo());
       this.storeInLocker(ticket.getTicketNo(), bag);
 
       return ticket;

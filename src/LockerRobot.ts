@@ -21,7 +21,7 @@ export class LockerRobot {
 
   private genSLocker(count: number) {
     for (let i = 0; i < count; i += 1) {
-      this.sLockerList.push(new SLocker());
+      this.sLockerList.push(new SLocker(i + 1));
     }
   }
 

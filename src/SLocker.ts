@@ -12,8 +12,8 @@ import {
 export class SLocker extends Locker {
   private list: StoredBag[] = [];
 
-  constructor() {
-    super(S_LOCKER_CAPACITY, S_LOCKER_SIZE);
+  constructor(lockerNo: number) {
+    super(lockerNo, S_LOCKER_CAPACITY, S_LOCKER_SIZE);
   }
 
   private getUsedCapacity() {
@@ -35,7 +35,7 @@ export class SLocker extends Locker {
 
   public storeBag(bag: Bag): Ticket | string {
     if (!this.isFull()) {
-      const ticket = new Ticket(S_LOCKER_SIZE);
+      const ticket = new Ticket(S_LOCKER_SIZE, this.getLockerNo());
       this.storeInLocker(ticket.getTicketNo(), bag);
 
       return ticket;

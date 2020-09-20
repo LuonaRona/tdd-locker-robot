@@ -5,6 +5,7 @@ import {
   S_LOCKER_COUNT,
   M_LOCKER_COUNT,
   S_LOCKER_CAPACITY,
+  M_LOCKER_CAPACITY,
   PROMPT_MESSAGE_LOCKER_IS_FULL,
   PROMPT_MESSAGE_INVALID_TICKET,
   PROMPT_MESSAGE_MISMATCH_TICKET,
@@ -13,6 +14,7 @@ import { LockerRobot } from '../src/LockerRobot';
 import { Ticket } from '../src/Ticket';
 
 const DEFAULT_CUSTOMER_BAG = '待存的包裹';
+const NUMBER_OF_SECOND_LOCKER = 2;
 const sCustomerBag = new Bag(S_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
 const mCustomerBag = new Bag(M_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
 let lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT);
@@ -49,7 +51,7 @@ test('should_get_S_bag_WHEN_take_bag_GIVEN_take_S_bag_valid_ticket', () => {
 
 test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_invalid_ticket', () => {
   lockerRobot.storeBag(sCustomerBag);
-  const invalidTicket = new Ticket(S_LOCKER_SIZE);
+  const invalidTicket = new Ticket(S_LOCKER_SIZE, 1);
   const promptMessage = lockerRobot.takeBag(invalidTicket) as string;
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
@@ -57,7 +59,7 @@ test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_invalid_ticket', () =
 
 test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_ticket_locker_size_mismatch', () => {
   lockerRobot.storeBag(sCustomerBag);
-  const sizeMismatchTicket = new Ticket(M_LOCKER_SIZE);
+  const sizeMismatchTicket = new Ticket(M_LOCKER_SIZE, 1);
   const promptMessage = lockerRobot.takeBag(sizeMismatchTicket) as string;
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_MISMATCH_TICKET);
@@ -66,6 +68,17 @@ test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_ticket_locker_size_mi
 test('should_get_M_ticket_WHEN_store_bag_GIVEN_store_M_bag_have_space', () => {
   const ticket = lockerRobot.storeBag(mCustomerBag) as Ticket;
 
+  expect(ticket.getLockerSize()).toEqual(M_LOCKER_SIZE);
+  expect(ticket.getTicketNo()).toBeTruthy();
+});
+
+test('should_get_M_ticket_WHEN_store_bag_GIVEN_store_M_bag_locker1_no_space', () => {
+  for (let i = 0; i < M_LOCKER_CAPACITY * 1; i += 1) {
+    lockerRobot.storeBag(new Bag(M_LOCKER_SIZE, `顾客的包裹_${i}`));
+  }
+  const ticket = lockerRobot.storeBag(mCustomerBag) as Ticket;
+
+  expect(ticket.getLockerNo()).toEqual(NUMBER_OF_SECOND_LOCKER);
   expect(ticket.getLockerSize()).toEqual(M_LOCKER_SIZE);
   expect(ticket.getTicketNo()).toBeTruthy();
 });
