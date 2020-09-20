@@ -17,10 +17,10 @@ export class LockerRobot {
   private primaryLockerRobot: PrimaryLockerRobot;
   private superLockerRobot: SuperLockerRobot;
 
-  constructor(sLockerCount: number, mLockerCount: number) {
+  constructor(sLockerCount: number, mLockerCount: number, lLockerCount: number) {
     this.genSLocker(sLockerCount);
     this.primaryLockerRobot = new PrimaryLockerRobot(mLockerCount);
-    this.superLockerRobot = new SuperLockerRobot();
+    this.superLockerRobot = new SuperLockerRobot(lLockerCount);
   }
 
   private genSLocker(count: number) {

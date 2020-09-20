@@ -16,16 +16,15 @@ import { LockerRobot } from '../src/LockerRobot';
 import { Ticket } from '../src/Ticket';
 
 const DEFAULT_CUSTOMER_BAG = '待存的包裹';
-const ONLY_ONE_LOCKER_COUNT = 1;
 const NUMBER_OF_FIRST_LOCKER = 1;
 const NUMBER_OF_SECOND_LOCKER = 2;
 const sCustomerBag = new Bag(S_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
 const mCustomerBag = new Bag(M_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
 const lCustomerBag = new Bag(L_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
-let lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT);
+let lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT, L_LOCKER_COUNT);
 
 afterEach(() => {
-  lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT);
+  lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT, L_LOCKER_COUNT);
 });
 
 test('should_get_S_ticket_WHEN_store_bag_GIVEN_store_S_bag_have_space', () => {
@@ -124,11 +123,21 @@ test('should_prompt_failure_WHEN_take_bag_GIVEN_take_M_bag_mismatch_ticket', () 
 });
 
 test('should_get_L_ticket_WHEN_store_bag_GIVEN_store_L_bag_only_1_locker_have_space', () => {
-  lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT);
+  lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT, 1);
 
   const ticket = lockerRobot.storeBag(lCustomerBag) as Ticket;
 
   expect(ticket.getLockerNo()).toEqual(NUMBER_OF_FIRST_LOCKER);
+  expect(ticket.getLockerSize()).toEqual(L_LOCKER_SIZE);
+  expect(ticket.getTicketNo()).toBeTruthy();
+});
+
+test('should_get_L_ticket_WHEN_store_bag_GIVEN_store_L_bag_locker_2_high_vacancy_rate', () => {
+  lockerRobot.storeBag(lCustomerBag);
+
+  const ticket = lockerRobot.storeBag(lCustomerBag) as Ticket;
+
+  expect(ticket.getLockerNo()).toEqual(NUMBER_OF_SECOND_LOCKER);
   expect(ticket.getLockerSize()).toEqual(L_LOCKER_SIZE);
   expect(ticket.getTicketNo()).toBeTruthy();
 });

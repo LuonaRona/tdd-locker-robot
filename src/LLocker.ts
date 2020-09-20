@@ -7,12 +7,23 @@ import { Ticket } from './Ticket';
 export class LLocker extends Locker {
   private list: StoredBag[] = [];
 
+  constructor(lockerNo: number) {
+    super(lockerNo, L_LOCKER_CAPACITY, L_LOCKER_SIZE);
+  }
+
   private getUsedCapacity() {
     return this.list.length;
   }
 
-  constructor(lockerNo: number) {
-    super(lockerNo, L_LOCKER_CAPACITY, L_LOCKER_SIZE);
+  public getVacancyRate() {
+    const total = this.getTotalCapacity();
+    const remaining = total - this.getUsedCapacity();
+
+    return remaining / total;
+  }
+
+  public isFull(): boolean {
+    return this.getTotalCapacity() === this.getUsedCapacity();
   }
 
   public storeBag(bag: Bag) {
