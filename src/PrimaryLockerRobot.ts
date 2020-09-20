@@ -1,7 +1,8 @@
+import _ from 'lodash';
 import { Bag } from './Bag';
 import { PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { MLocker } from './MLocker';
-
+import { Ticket } from './Ticket';
 export class PrimaryLockerRobot {
   private mLockerList: MLocker[] = [];
 
@@ -31,5 +32,17 @@ export class PrimaryLockerRobot {
     }
 
     return PROMPT_MESSAGE_LOCKER_IS_FULL;
+  }
+
+  public takeBag(ticket: Ticket) {
+    const count = this.getMLockerCount();
+
+    for (let i = 0; i < count; i += 1) {
+      const currentLocker = this.mLockerList[i];
+
+      if (currentLocker.bagIsExists(ticket.getTicketNo())) {
+        return currentLocker.takeBag(ticket);
+      }
+    }
   }
 }

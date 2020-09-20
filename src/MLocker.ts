@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Bag } from './Bag';
 import { Locker } from './Locker';
 import { Ticket } from './Ticket';
@@ -37,5 +38,16 @@ export class MLocker extends Locker {
     }
 
     return PROMPT_MESSAGE_LOCKER_IS_FULL;
+  }
+
+  public takeBag(ticket: Ticket) {
+    const ticketNo = ticket.getTicketNo();
+
+    if (this.bagIsExists(ticketNo)) {
+      const [currentStoredBag] = _.remove(this.list, (bag) => {
+        return bag.getTicketNo() === ticketNo;
+      });
+      return currentStoredBag;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Bag } from './Bag';
 import { Locker } from './Locker';
 import { Ticket } from './Ticket';
@@ -46,16 +47,12 @@ export class SLocker extends Locker {
 
   public takeBag(ticket: Ticket) {
     const ticketNo = ticket.getTicketNo();
-    const storedBagList = this.list;
 
     if (this.bagIsExists(ticketNo)) {
-      const currentStoredBag = storedBagList.find((bag) => {
+      const [currentStoredBag] = _.remove(this.list, (bag) => {
         return bag.getTicketNo() === ticketNo;
-      }) as Bag;
-
+      });
       return currentStoredBag;
     }
-
-    return PROMPT_MESSAGE_INVALID_TICKET;
   }
 }

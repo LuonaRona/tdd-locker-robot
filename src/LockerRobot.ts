@@ -70,7 +70,11 @@ export class LockerRobot {
     }
   }
 
-  public takeBag(ticket: Ticket) {
+  public takeSBag(ticket: Ticket) {
     return this.takeFromSLocker(ticket);
+  }
+
+  public takeMBag(ticket: Ticket) {
+    return this.primaryLockerRobot.takeBag(ticket);
   }
 }
