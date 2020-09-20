@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import { Bag } from './Bag';
-import { PROMPT_MESSAGE_INVALID_TICKET, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
+import {
+  M_LOCKER_SIZE,
+  PROMPT_MESSAGE_INVALID_TICKET,
+  PROMPT_MESSAGE_LOCKER_IS_FULL,
+  PROMPT_MESSAGE_MISMATCH_TICKET,
+} from './constant/locker';
 import { MLocker } from './MLocker';
 import { Ticket } from './Ticket';
 export class PrimaryLockerRobot {
@@ -35,6 +40,10 @@ export class PrimaryLockerRobot {
   }
 
   public takeBag(ticket: Ticket) {
+    if (ticket.getLockerSize() !== M_LOCKER_SIZE) {
+      return PROMPT_MESSAGE_MISMATCH_TICKET;
+    }
+
     const count = this.getMLockerCount();
 
     for (let i = 0; i < count; i += 1) {
