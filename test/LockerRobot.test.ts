@@ -46,7 +46,7 @@ test('should_prompt_failure_WHEN_store_bag_GIVEN_store_S_bag_no_space', () => {
   expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
 });
 
-test('should_get_S_bag_WHEN_take_bag_GIVEN_take_S_bag_valid_ticket', () => {
+test('should_get_S_bag_WHEN_take_bag_GIVEN_S_locker_valid_ticket', () => {
   const ticket = lockerRobot.storeBag(sCustomerBag) as Ticket;
   const bag = lockerRobot.takeSBag(ticket) as Bag;
 
@@ -54,7 +54,7 @@ test('should_get_S_bag_WHEN_take_bag_GIVEN_take_S_bag_valid_ticket', () => {
   expect(bag.getContent()).toEqual(DEFAULT_CUSTOMER_BAG);
 });
 
-test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_invalid_ticket', () => {
+test('should_prompt_failure_WHEN_take_bag_GIVEN_S_locker_invalid_ticket', () => {
   lockerRobot.storeBag(sCustomerBag);
   const invalidTicket = new Ticket(S_LOCKER_SIZE, 1);
   const promptMessage = lockerRobot.takeSBag(invalidTicket) as string;
@@ -62,7 +62,7 @@ test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_invalid_ticket', () =
   expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
 });
 
-test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_ticket_locker_size_mismatch', () => {
+test('should_prompt_failure_WHEN_take_bag_GIVEN_mismatch_locker_ticket', () => {
   lockerRobot.storeBag(sCustomerBag);
   const sizeMismatchTicket = new Ticket(M_LOCKER_SIZE, 1);
   const promptMessage = lockerRobot.takeSBag(sizeMismatchTicket) as string;
@@ -97,7 +97,7 @@ test('should_prompt_failure_WHEN_store_bag_GIVEN_store_M_bag_no_space', () => {
   expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
 });
 
-test('should_get_M_bag_WHEN_take_bag_GIVEN_take_M_bag_valid_ticket', () => {
+test('should_get_M_bag_WHEN_take_bag_GIVEN_M_locker_valid_ticket', () => {
   const ticket = lockerRobot.storeBag(mCustomerBag) as Ticket;
   const bag = lockerRobot.takeMBag(ticket) as Bag;
 
@@ -105,7 +105,7 @@ test('should_get_M_bag_WHEN_take_bag_GIVEN_take_M_bag_valid_ticket', () => {
   expect(bag.getContent()).toEqual(DEFAULT_CUSTOMER_BAG);
 });
 
-test('should_prompt_failure_WHEN_take_bag_GIVEN_take_M_bag_invalid_ticket', () => {
+test('should_prompt_failure_WHEN_take_bag_GIVEN_M_locker_invalid_ticket', () => {
   lockerRobot.storeBag(mCustomerBag);
   const invalidTicket = new Ticket(M_LOCKER_SIZE, 1);
 
@@ -114,7 +114,7 @@ test('should_prompt_failure_WHEN_take_bag_GIVEN_take_M_bag_invalid_ticket', () =
   expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
 });
 
-test('should_prompt_failure_WHEN_take_bag_GIVEN_take_M_bag_mismatch_ticket', () => {
+test('should_prompt_failure_WHEN_take_bag_GIVEN_mismatch_locker_ticket', () => {
   lockerRobot.storeBag(mCustomerBag);
   const mismatchTicket = new Ticket(S_LOCKER_SIZE, 1);
 
@@ -151,4 +151,12 @@ test('should_prompt_failure_WHEN_store_bag_GIVEN_store_L_bag_locker_hava_no_spac
   const promptMessage = lockerRobot.storeBag(lCustomerBag) as string;
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
+});
+
+test('should_get_L_bag_WHEN_take_bag_GIVEN_L_locker_valid_ticket', () => {
+  const ticket = lockerRobot.storeBag(lCustomerBag) as Ticket;
+  const bag = lockerRobot.takeLBag(ticket) as Bag;
+
+  expect(bag.getSize()).toEqual(L_LOCKER_SIZE);
+  expect(bag.getContent()).toEqual(DEFAULT_CUSTOMER_BAG);
 });

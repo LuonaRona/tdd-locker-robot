@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Bag } from './Bag';
 import { L_LOCKER_CAPACITY, L_LOCKER_SIZE, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { Locker } from './Locker';
@@ -22,6 +23,11 @@ export class LLocker extends Locker {
     return remaining / total;
   }
 
+  public bagIsExists(ticketNo: string): boolean {
+    const ticketsNo = this.list.map((bag) => bag.getTicketNo());
+    return ticketsNo.includes(ticketNo);
+  }
+
   public isFull(): boolean {
     return this.getTotalCapacity() === this.getUsedCapacity();
   }
@@ -35,5 +41,16 @@ export class LLocker extends Locker {
     }
 
     return PROMPT_MESSAGE_LOCKER_IS_FULL;
+  }
+
+  public takeBag(ticket: Ticket) {
+    const ticketNo = ticket.getTicketNo();
+
+    if (this.bagIsExists(ticketNo)) {
+      const [currentStoredBag] = _.remove(this.list, (bag) => {
+        return bag.getTicketNo() === ticketNo;
+      });
+      return currentStoredBag;
+    }
   }
 }

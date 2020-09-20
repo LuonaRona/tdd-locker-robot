@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { Bag } from './Bag';
 import { PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { LLocker } from './LLocker';
+import { Ticket } from './Ticket';
 
 export class SuperLockerRobot {
   private lLockerList: LLocker[] = [];
@@ -30,5 +31,15 @@ export class SuperLockerRobot {
     }
 
     return PROMPT_MESSAGE_LOCKER_IS_FULL;
+  }
+
+  public takeBag(ticket: Ticket) {
+    const count = this.getLLockerCount();
+    for (let i = 0; i < count; i++) {
+      const currentLocker = this.lLockerList[i];
+      if (currentLocker.bagIsExists(ticket.getTicketNo())) {
+        return currentLocker.takeBag(ticket);
+      }
+    }
   }
 }
