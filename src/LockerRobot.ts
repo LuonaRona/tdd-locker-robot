@@ -1,13 +1,21 @@
 import { Bag } from './Bag';
-import { PROMPT_MESSAGE_INVALID_TICKET, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
+import {
+  M_LOCKER_SIZE,
+  PROMPT_MESSAGE_INVALID_TICKET,
+  PROMPT_MESSAGE_LOCKER_IS_FULL,
+  S_LOCKER_SIZE,
+} from './constant/locker';
 import { SLocker } from './SLocker';
 import { Ticket } from './Ticket';
+import { PrimaryLockerRobot } from './PrimaryLockerRobot';
 
 export class LockerRobot {
   private sLockerList: SLocker[] = [];
+  private primaryLockerRobot: PrimaryLockerRobot;
 
-  constructor(sLockerCount: number) {
+  constructor(sLockerCount: number, mLockerCount: number) {
     this.genSLocker(sLockerCount);
+    this.primaryLockerRobot = new PrimaryLockerRobot(mLockerCount);
   }
 
   private genSLocker(count: number) {
@@ -49,7 +57,12 @@ export class LockerRobot {
   }
 
   public storeBag(bag: Bag) {
-    return this.storeInSLocker(bag);
+    switch (bag.getSize()) {
+      case S_LOCKER_SIZE:
+        return this.storeInSLocker(bag);
+      case M_LOCKER_SIZE:
+        return this.primaryLockerRobot.storeBag(bag);
+    }
   }
 
   public takeBag(ticket: Ticket) {

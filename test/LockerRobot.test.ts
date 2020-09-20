@@ -1,7 +1,9 @@
 import { Bag } from '../src/Bag';
 import {
-  DEFAULT_NUMBER_OF_S_LOCKER,
   S_LOCKER_SIZE,
+  M_LOCKER_SIZE,
+  S_LOCKER_COUNT,
+  M_LOCKER_COUNT,
   S_LOCKER_CAPACITY,
   PROMPT_MESSAGE_LOCKER_IS_FULL,
   PROMPT_MESSAGE_INVALID_TICKET,
@@ -11,10 +13,11 @@ import { Ticket } from '../src/Ticket';
 
 const DEFAULT_CUSTOMER_BAG = '待存的包裹';
 const sCustomerBag = new Bag(S_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
-let lockerRobot = new LockerRobot(DEFAULT_NUMBER_OF_S_LOCKER);
+const mCustomerBag = new Bag(M_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
+let lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT);
 
 afterEach(() => {
-  lockerRobot = new LockerRobot(DEFAULT_NUMBER_OF_S_LOCKER);
+  lockerRobot = new LockerRobot(S_LOCKER_COUNT, M_LOCKER_COUNT);
 });
 
 test('should_get_S_ticket_WHEN_store_bag_GIVEN_store_S_bag_have_space', () => {
@@ -25,7 +28,7 @@ test('should_get_S_ticket_WHEN_store_bag_GIVEN_store_S_bag_have_space', () => {
 });
 
 test('should_prompt_failure_WHEN_store_bag_GIVEN_store_S_bag_no_space', () => {
-  const TotalCapacity = DEFAULT_NUMBER_OF_S_LOCKER * S_LOCKER_CAPACITY;
+  const TotalCapacity = S_LOCKER_COUNT * S_LOCKER_CAPACITY;
 
   for (let i = 0; i < TotalCapacity; i += 1) {
     lockerRobot.storeBag(new Bag(S_LOCKER_SIZE, `顾客的包裹_${i}`));
@@ -49,4 +52,11 @@ test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_invalid_ticket', () =
   const promptMessage = lockerRobot.takeBag(invalidTicket) as string;
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
+});
+
+test('should_get_M_ticket_WHEN_store_bag_GIVEN_store_M_bag_have_space', () => {
+  const ticket = lockerRobot.storeBag(mCustomerBag) as Ticket;
+
+  expect(ticket.getLockerSize()).toEqual(M_LOCKER_SIZE);
+  expect(ticket.getTicketNo()).toBeTruthy();
 });
