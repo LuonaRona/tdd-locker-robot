@@ -40,4 +40,8 @@ export class LockerRobotManager {
   public takeMBag(ticket: Ticket) {
     return this.primaryLockerRobot.takeBag(ticket);
   }
+
+  public takeLBag(ticket: Ticket) {
+    return this.superLockerRobot.takeBag(ticket);
+  }
 }

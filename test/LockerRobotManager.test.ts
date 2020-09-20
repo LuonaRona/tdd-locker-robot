@@ -123,3 +123,11 @@ test('should_prompt_failure_WHEN_LockerRobotManager_store_bag_GIVEN_L_bag_have_n
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
 });
+
+test('should_L_bag_WHEN_LockerRobotManager_take_bag_GIVEN_L_ticket_and_is_valid', () => {
+  const ticket = lockerRobotManager.storeBag(lCustomerBag) as Ticket;
+  const bag = lockerRobotManager.takeLBag(ticket) as Bag;
+
+  expect(bag.getSize()).toEqual(L_LOCKER_SIZE);
+  expect(bag.getContent()).toEqual(DEFAULT_CUSTOMER_BAG);
+});
