@@ -54,5 +54,7 @@ export class SLocker extends Locker {
 
       return currentStoredBag;
     }
+
+    return PROMPT_MESSAGE_INVALID_TICKET;
   }
 }

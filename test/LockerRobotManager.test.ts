@@ -1,5 +1,10 @@
 import { Bag } from '../src/Bag';
-import { PROMPT_MESSAGE_LOCKER_IS_FULL, S_LOCKER_CAPACITY, S_LOCKER_SIZE } from '../src/constant/locker';
+import {
+  PROMPT_MESSAGE_INVALID_TICKET,
+  PROMPT_MESSAGE_LOCKER_IS_FULL,
+  S_LOCKER_CAPACITY,
+  S_LOCKER_SIZE,
+} from '../src/constant/locker';
 import { LockerRobotManager } from '../src/LockerRobotManager';
 import { Ticket } from '../src/Ticket';
 
@@ -35,4 +40,13 @@ test('should_get_S_bag_WHEN_LockerRobotManager_take_bag_GIVEN_S_ticket_and_valid
 
   expect(bag.getSize()).toEqual(S_LOCKER_SIZE);
   expect(bag.getContent()).toEqual(DEFAULT_CUSTOMER_BAG);
+});
+
+test('should_prompt_failure_WHEN_LockerRobotManager_take_bag_GIVEN_S_ticket_and_invalid_ticket', () => {
+  lockerRobotManager.storeBag(sCustomerBag);
+  const invalidTicket = new Ticket(S_LOCKER_SIZE, 1);
+
+  const promptMessage = lockerRobotManager.takeBag(invalidTicket) as string;
+
+  expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
 });
