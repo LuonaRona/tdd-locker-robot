@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import { Bag } from './Bag';
-import { PROMPT_MESSAGE_INVALID_TICKET, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
+import {
+  L_LOCKER_SIZE,
+  PROMPT_MESSAGE_INVALID_TICKET,
+  PROMPT_MESSAGE_LOCKER_IS_FULL,
+  PROMPT_MESSAGE_MISMATCH_TICKET,
+} from './constant/locker';
 import { LLocker } from './LLocker';
 import { Ticket } from './Ticket';
 
@@ -34,6 +39,10 @@ export class SuperLockerRobot {
   }
 
   public takeBag(ticket: Ticket) {
+    if (ticket.getLockerSize() !== L_LOCKER_SIZE) {
+      return PROMPT_MESSAGE_MISMATCH_TICKET;
+    }
+
     const count = this.getLLockerCount();
     for (let i = 0; i < count; i++) {
       const currentLocker = this.lLockerList[i];
