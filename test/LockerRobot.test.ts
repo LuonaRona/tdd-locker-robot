@@ -16,14 +16,14 @@ afterEach(() => {
   lockerRobot = new LockerRobot(DEFAULT_NUMBER_OF_S_LOCKER);
 });
 
-test('should_get_S_ticket_WHEN_store_bag_GIVEN_Non-VIP_store_S_bag_have_space', () => {
+test('should_get_S_ticket_WHEN_store_bag_GIVEN_store_S_bag_have_space', () => {
   const ticket = lockerRobot.storeBag(sCustomerBag) as Ticket;
 
   expect(ticket.getLockerSize()).toEqual(S_LOCKER_SIZE);
   expect(ticket.getTicketNo()).toBeTruthy();
 });
 
-test('should_prompt_failure_WHEN_store_bag_GIVEN_Non-VIP_store_S_bag_no_space', () => {
+test('should_prompt_failure_WHEN_store_bag_GIVEN_store_S_bag_no_space', () => {
   const TotalCapacity = DEFAULT_NUMBER_OF_S_LOCKER * S_LOCKER_CAPACITY;
 
   for (let i = 0; i < TotalCapacity; i += 1) {
@@ -34,7 +34,7 @@ test('should_prompt_failure_WHEN_store_bag_GIVEN_Non-VIP_store_S_bag_no_space', 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
 });
 
-test('should_get_S_bag_WHEN_take_bag_GIVEN_Non-VIP_take_S_bag_valid_ticket', () => {
+test('should_get_S_bag_WHEN_take_bag_GIVEN_take_S_bag_valid_ticket', () => {
   const ticket = lockerRobot.storeBag(sCustomerBag) as Ticket;
   const bag = lockerRobot.takeBag(ticket) as Bag;
 
