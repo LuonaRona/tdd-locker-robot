@@ -2,7 +2,12 @@ import { Bag } from './Bag';
 import { Locker } from './Locker';
 import { Ticket } from './Ticket';
 import { StoredBag } from './StoredBag';
-import { PROMPT_MESSAGE_LOCKER_IS_FULL, S_LOCKER_CAPACITY, S_LOCKER_SIZE } from './constant/locker';
+import {
+  PROMPT_MESSAGE_INVALID_TICKET,
+  PROMPT_MESSAGE_LOCKER_IS_FULL,
+  S_LOCKER_CAPACITY,
+  S_LOCKER_SIZE,
+} from './constant/locker';
 
 export class SLocker extends Locker {
   private list: StoredBag[] = [];
@@ -50,5 +55,7 @@ export class SLocker extends Locker {
 
       return currentStoredBag;
     }
+
+    return PROMPT_MESSAGE_INVALID_TICKET;
   }
 }

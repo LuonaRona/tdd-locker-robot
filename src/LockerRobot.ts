@@ -1,5 +1,5 @@
 import { Bag } from './Bag';
-import { PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
+import { PROMPT_MESSAGE_INVALID_TICKET, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { SLocker } from './SLocker';
 import { Ticket } from './Ticket';
 
@@ -44,6 +44,8 @@ export class LockerRobot {
         return currentLocker.takeBag(ticket);
       }
     }
+
+    return PROMPT_MESSAGE_INVALID_TICKET;
   }
 
   public storeBag(bag: Bag) {
