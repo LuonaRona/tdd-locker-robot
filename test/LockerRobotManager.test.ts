@@ -139,3 +139,11 @@ test('should_L_bag_WHEN_LockerRobotManager_take_bag_GIVEN_L_ticket_and_is_invali
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
 });
+
+test('should_L_bag_WHEN_LockerRobotManager_take_bag_GIVEN_mismatch_ticket', () => {
+  lockerRobotManager.storeBag(lCustomerBag);
+  const mismatchTicket = new Ticket(M_LOCKER_SIZE, 1);
+  const promptMessage = lockerRobotManager.takeLBag(mismatchTicket) as string;
+
+  expect(promptMessage).toEqual(PROMPT_MESSAGE_MISMATCH_TICKET);
+});
