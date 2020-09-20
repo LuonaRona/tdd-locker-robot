@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Bag } from './Bag';
+import { PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { LLocker } from './LLocker';
 
 export class SuperLockerRobot {
@@ -24,6 +25,10 @@ export class SuperLockerRobot {
       return locker.getVacancyRate();
     });
 
-    return highVacancyRate?.storeBag(bag);
+    if (highVacancyRate!.getVacancyRate() !== 0) {
+      return highVacancyRate!.storeBag(bag);
+    }
+
+    return PROMPT_MESSAGE_LOCKER_IS_FULL;
   }
 }

@@ -11,6 +11,7 @@ import {
   PROMPT_MESSAGE_LOCKER_IS_FULL,
   PROMPT_MESSAGE_INVALID_TICKET,
   PROMPT_MESSAGE_MISMATCH_TICKET,
+  L_LOCKER_CAPACITY,
 } from '../src/constant/locker';
 import { LockerRobot } from '../src/LockerRobot';
 import { Ticket } from '../src/Ticket';
@@ -140,4 +141,14 @@ test('should_get_L_ticket_WHEN_store_bag_GIVEN_store_L_bag_locker_2_high_vacancy
   expect(ticket.getLockerNo()).toEqual(NUMBER_OF_SECOND_LOCKER);
   expect(ticket.getLockerSize()).toEqual(L_LOCKER_SIZE);
   expect(ticket.getTicketNo()).toBeTruthy();
+});
+
+test('should_prompt_failure_WHEN_store_bag_GIVEN_store_L_bag_locker_hava_no_space', () => {
+  for (let i = 0; i < L_LOCKER_COUNT * L_LOCKER_CAPACITY; i++) {
+    lockerRobot.storeBag(lCustomerBag);
+  }
+
+  const promptMessage = lockerRobot.storeBag(lCustomerBag) as string;
+
+  expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
 });

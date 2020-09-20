@@ -1,5 +1,5 @@
 import { Bag } from './Bag';
-import { L_LOCKER_CAPACITY, L_LOCKER_SIZE } from './constant/locker';
+import { L_LOCKER_CAPACITY, L_LOCKER_SIZE, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { Locker } from './Locker';
 import { StoredBag } from './StoredBag';
 import { Ticket } from './Ticket';
@@ -33,5 +33,7 @@ export class LLocker extends Locker {
 
       return ticket;
     }
+
+    return PROMPT_MESSAGE_LOCKER_IS_FULL;
   }
 }
