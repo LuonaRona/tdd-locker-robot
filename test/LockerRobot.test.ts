@@ -7,6 +7,7 @@ import {
   S_LOCKER_CAPACITY,
   PROMPT_MESSAGE_LOCKER_IS_FULL,
   PROMPT_MESSAGE_INVALID_TICKET,
+  PROMPT_MESSAGE_MISMATCH_TICKET,
 } from '../src/constant/locker';
 import { LockerRobot } from '../src/LockerRobot';
 import { Ticket } from '../src/Ticket';
@@ -52,6 +53,14 @@ test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_invalid_ticket', () =
   const promptMessage = lockerRobot.takeBag(invalidTicket) as string;
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_INVALID_TICKET);
+});
+
+test('should_prompt_failure_WHEN_take_bag_GIVEN_take_S_bag_ticket_locker_size_mismatch', () => {
+  lockerRobot.storeBag(sCustomerBag);
+  const sizeMismatchTicket = new Ticket(M_LOCKER_SIZE);
+  const promptMessage = lockerRobot.takeBag(sizeMismatchTicket) as string;
+
+  expect(promptMessage).toEqual(PROMPT_MESSAGE_MISMATCH_TICKET);
 });
 
 test('should_get_M_ticket_WHEN_store_bag_GIVEN_store_M_bag_have_space', () => {

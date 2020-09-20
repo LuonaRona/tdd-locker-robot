@@ -3,6 +3,7 @@ import {
   M_LOCKER_SIZE,
   PROMPT_MESSAGE_INVALID_TICKET,
   PROMPT_MESSAGE_LOCKER_IS_FULL,
+  PROMPT_MESSAGE_MISMATCH_TICKET,
   S_LOCKER_SIZE,
 } from './constant/locker';
 import { SLocker } from './SLocker';
@@ -43,6 +44,10 @@ export class LockerRobot {
   }
 
   private takeFromSLocker(ticket: Ticket) {
+    if (ticket.getLockerSize() !== S_LOCKER_SIZE) {
+      return PROMPT_MESSAGE_MISMATCH_TICKET;
+    }
+
     const count = this.getSLockerCount();
 
     for (let i = 0; i < count; i += 1) {
