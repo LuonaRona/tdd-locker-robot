@@ -3,12 +3,7 @@ import { Bag } from './Bag';
 import { Locker } from './Locker';
 import { Ticket } from './Ticket';
 import { StoredBag } from './StoredBag';
-import {
-  M_LOCKER_CAPACITY,
-  M_LOCKER_SIZE,
-  PROMPT_MESSAGE_INVALID_TICKET,
-  PROMPT_MESSAGE_LOCKER_IS_FULL,
-} from './constant/locker';
+import { M_LOCKER_CAPACITY, M_LOCKER_SIZE } from './constant/locker';
 
 export class MLocker extends Locker {
   private list: StoredBag[] = [];
@@ -35,14 +30,10 @@ export class MLocker extends Locker {
   }
 
   public storeBag(bag: Bag) {
-    if (!this.isFull()) {
-      const ticket = new Ticket(M_LOCKER_SIZE, this.getLockerNo());
-      this.storeInLocker(ticket.getTicketNo(), bag);
+    const ticket = new Ticket(M_LOCKER_SIZE, this.getLockerNo());
+    this.storeInLocker(ticket.getTicketNo(), bag);
 
-      return ticket;
-    }
-
-    return PROMPT_MESSAGE_LOCKER_IS_FULL;
+    return ticket;
   }
 
   public takeBag(ticket: Ticket) {

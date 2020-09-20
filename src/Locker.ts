@@ -15,10 +15,6 @@ export class Locker {
     return this.lockerNo;
   }
 
-  public getSize() {
-    return this.size;
-  }
-
   public getTotalCapacity() {
     return this.totalCapacity;
   }

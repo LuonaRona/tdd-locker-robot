@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Bag } from './Bag';
-import { L_LOCKER_CAPACITY, L_LOCKER_SIZE, PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
+import { L_LOCKER_CAPACITY, L_LOCKER_SIZE } from './constant/locker';
 import { Locker } from './Locker';
 import { StoredBag } from './StoredBag';
 import { Ticket } from './Ticket';
@@ -28,19 +28,11 @@ export class LLocker extends Locker {
     return ticketsNo.includes(ticketNo);
   }
 
-  public isFull(): boolean {
-    return this.getTotalCapacity() === this.getUsedCapacity();
-  }
-
   public storeBag(bag: Bag) {
-    if (this.getUsedCapacity() < this.getTotalCapacity()) {
-      const ticket = new Ticket(L_LOCKER_SIZE, this.getLockerNo());
-      this.list.push(new StoredBag(ticket.getTicketNo(), bag));
+    const ticket = new Ticket(L_LOCKER_SIZE, this.getLockerNo());
+    this.list.push(new StoredBag(ticket.getTicketNo(), bag));
 
-      return ticket;
-    }
-
-    return PROMPT_MESSAGE_LOCKER_IS_FULL;
+    return ticket;
   }
 
   public takeBag(ticket: Ticket) {
