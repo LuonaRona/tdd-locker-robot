@@ -1,5 +1,6 @@
 import { Bag } from './Bag';
 import {
+  L_LOCKER_SIZE,
   M_LOCKER_SIZE,
   PROMPT_MESSAGE_INVALID_TICKET,
   PROMPT_MESSAGE_LOCKER_IS_FULL,
@@ -9,14 +10,17 @@ import {
 import { SLocker } from './SLocker';
 import { Ticket } from './Ticket';
 import { PrimaryLockerRobot } from './PrimaryLockerRobot';
+import { SuperLockerRobot } from './SuperLockerRobot';
 
 export class LockerRobot {
   private sLockerList: SLocker[] = [];
   private primaryLockerRobot: PrimaryLockerRobot;
+  private superLockerRobot: SuperLockerRobot;
 
   constructor(sLockerCount: number, mLockerCount: number) {
     this.genSLocker(sLockerCount);
     this.primaryLockerRobot = new PrimaryLockerRobot(mLockerCount);
+    this.superLockerRobot = new SuperLockerRobot();
   }
 
   private genSLocker(count: number) {
@@ -67,6 +71,8 @@ export class LockerRobot {
         return this.storeInSLocker(bag);
       case M_LOCKER_SIZE:
         return this.primaryLockerRobot.storeBag(bag);
+      case L_LOCKER_SIZE:
+        return this.superLockerRobot.storeBag(bag);
     }
   }
 
