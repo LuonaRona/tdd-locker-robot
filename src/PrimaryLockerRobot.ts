@@ -1,4 +1,5 @@
 import { Bag } from './Bag';
+import { PROMPT_MESSAGE_LOCKER_IS_FULL } from './constant/locker';
 import { MLocker } from './MLocker';
 
 export class PrimaryLockerRobot {
@@ -28,5 +29,7 @@ export class PrimaryLockerRobot {
         return currentLocker.storeBag(bag);
       }
     }
+
+    return PROMPT_MESSAGE_LOCKER_IS_FULL;
   }
 }

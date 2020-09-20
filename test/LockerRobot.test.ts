@@ -82,3 +82,12 @@ test('should_get_M_ticket_WHEN_store_bag_GIVEN_store_M_bag_locker1_no_space', ()
   expect(ticket.getLockerSize()).toEqual(M_LOCKER_SIZE);
   expect(ticket.getTicketNo()).toBeTruthy();
 });
+
+test('should_prompt_failure_WHEN_store_bag_GIVEN_store_M_bag_no_space', () => {
+  for (let i = 0; i < M_LOCKER_CAPACITY * M_LOCKER_COUNT; i += 1) {
+    lockerRobot.storeBag(new Bag(M_LOCKER_SIZE, `顾客的包裹_${i}`));
+  }
+  const promptMessage = lockerRobot.storeBag(mCustomerBag) as string;
+
+  expect(promptMessage).toEqual(PROMPT_MESSAGE_LOCKER_IS_FULL);
+});
