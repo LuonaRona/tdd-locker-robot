@@ -1,6 +1,7 @@
 import { Bag } from '../src/Bag';
 import {
   LOCKER_ROBOT_MANAGER_DEFAULT_LOCKER_COUNT,
+  L_LOCKER_SIZE,
   M_LOCKER_CAPACITY,
   M_LOCKER_SIZE,
   PROMPT_MESSAGE_INVALID_TICKET,
@@ -15,6 +16,7 @@ import { Ticket } from '../src/Ticket';
 const DEFAULT_CUSTOMER_BAG = '待存的包裹';
 const sCustomerBag = new Bag(S_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
 const mCustomerBag = new Bag(M_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
+const lCustomerBag = new Bag(L_LOCKER_SIZE, DEFAULT_CUSTOMER_BAG);
 let lockerRobotManager = new LockerRobotManager();
 
 afterEach(() => {
@@ -103,4 +105,11 @@ test('should_get_M_bag_WHEN_LockerRobotManager_take_bag_GIVEN_mismatch_ticket', 
   const promptMessage = lockerRobotManager.takeMBag(mismatchTicket) as string;
 
   expect(promptMessage).toEqual(PROMPT_MESSAGE_MISMATCH_TICKET);
+});
+
+test('should_get_L_ticket_WHEN_LockerRobotManager_store_bag_GIVEN_L_bag_have_space', () => {
+  const ticket = lockerRobotManager.storeBag(lCustomerBag) as Ticket;
+
+  expect(ticket.getLockerSize()).toEqual(L_LOCKER_SIZE);
+  expect(ticket.getTicketNo()).toBeTruthy();
 });
